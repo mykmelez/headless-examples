@@ -7,7 +7,7 @@ const firefox = require('selenium-webdriver/firefox');
 promise.USE_PROMISE_MANAGER = false;
 process.env.MOZ_HEADLESS = "1";
 
-let driver = new Builder()
+const driver = new Builder()
 .forBrowser('firefox')
 .setFirefoxOptions(new firefox.Options().setBinary(firefox.Channel.NIGHTLY))
 .build();
