@@ -20,10 +20,8 @@ async function main() {
     const readyState = await driver.executeScript('return document.readyState');
     return readyState === 'complete';
   });
-
   const data = await driver.takeScreenshot();
   await promisify(fs.writeFile)('screenshot.png', data, 'base64');
-
   await driver.quit();
 }
 
