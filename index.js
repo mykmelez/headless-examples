@@ -1,6 +1,10 @@
-let fs = require('fs');
-let webdriver = require('selenium-webdriver');
-let firefox = require('selenium-webdriver/firefox');
+const { promisify } = require('util');
+const fs = require('fs');
+
+const webdriver = require('selenium-webdriver');
+const firefox = require('selenium-webdriver/firefox');
+
+webdriver.promise.USE_PROMISE_MANAGER = false;
 
 let Builder = webdriver.Builder;
 let By = webdriver.By;
@@ -14,17 +18,19 @@ let driver = new Builder()
 .setFirefoxOptions(new firefox.Options().setBinary(firefox.Channel.NIGHTLY))
 .build();
 
-driver.get('https://developer.mozilla.org/');
-driver.findElement(By.id('home-q')).sendKeys('testing', Key.RETURN);
-driver.wait(until.titleIs('Search Results for "testing" | MDN'));
-driver.wait(() => {
-  return driver.executeScript('return document.readyState').then(readyState => {
-    return readyState === 'complete';
+async function main() {
+  await driver.get('https://developer.mozilla.org/');
+  await driver.findElement(By.id('home-q')).sendKeys('testing', Key.RETURN);
+  await driver.wait(until.titleIs('Search Results for "testing" | MDN'));
+  await driver.wait(() => {
+    return driver.executeScript('return document.readyState').then(readyState => {
+      return readyState === 'complete';
+    });
   });
-});
 
-driver.takeScreenshot()
-.then(data => {
-  fs.writeFile('screenshot.png', data, 'base64', () => driver.quit());
-})
-.catch(console.error);
+  const data = await driver.takeScreenshot();
+  await promisify(fs.writeFile)('screenshot.png', data, 'base64');
+  driver.quit();
+}
+
+main();
