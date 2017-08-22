@@ -22,7 +22,8 @@ async function main() {
 
   const data = await driver.takeScreenshot();
   await promisify(fs.writeFile)('screenshot.png', data, 'base64');
-  driver.quit();
+
+  await driver.quit();
 }
 
 main();
