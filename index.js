@@ -17,7 +17,8 @@ async function main() {
   await driver.findElement(By.id('home-q')).sendKeys('testing', Key.RETURN);
   await driver.wait(until.titleIs('Search Results for "testing" | MDN'));
   await driver.wait(async () => {
-    return await driver.executeScript('return document.readyState') === 'complete';
+    const readyState = await driver.executeScript('return document.readyState');
+    return readyState === 'complete';
   });
 
   const data = await driver.takeScreenshot();
