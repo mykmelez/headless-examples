@@ -1,16 +1,10 @@
 const { promisify } = require('util');
 const fs = require('fs');
 
-const webdriver = require('selenium-webdriver');
+const { Builder, By, Key, promise, until } = require('selenium-webdriver');
 const firefox = require('selenium-webdriver/firefox');
 
-webdriver.promise.USE_PROMISE_MANAGER = false;
-
-let Builder = webdriver.Builder;
-let By = webdriver.By;
-let Key = webdriver.Key;
-let until = webdriver.until;
-
+promise.USE_PROMISE_MANAGER = false;
 process.env.MOZ_HEADLESS = "1";
 
 let driver = new Builder()
