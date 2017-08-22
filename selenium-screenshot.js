@@ -1,14 +1,14 @@
 /* Any copyright is dedicated to the Public Domain.
  * http://creativecommons.org/publicdomain/zero/1.0/ */
 
+const { writeFile } = require('fs');
 const { promisify } = require('util');
-const fs = require('fs');
 
 const { Builder, By, Key, promise, until } = require('selenium-webdriver');
 const firefox = require('selenium-webdriver/firefox');
 
-promise.USE_PROMISE_MANAGER = false;
 process.env.MOZ_HEADLESS = "1";
+promise.USE_PROMISE_MANAGER = false;
 
 const driver = new Builder()
 .forBrowser('firefox')
@@ -24,7 +24,7 @@ async function main() {
     return readyState === 'complete';
   });
   const data = await driver.takeScreenshot();
-  await promisify(fs.writeFile)('screenshot.png', data, 'base64');
+  await promisify(writeFile)('screenshot.png', data, 'base64');
   await driver.quit();
 }
 

@@ -1,7 +1,7 @@
 /* Any copyright is dedicated to the Public Domain.
  * http://creativecommons.org/publicdomain/zero/1.0/ */
 
-let fs = require('fs');
+const { writeFile } = require('fs');
 
 const { Builder, By, Key, promise, until } = require('selenium-webdriver');
 const firefox = require('selenium-webdriver/firefox');
@@ -23,6 +23,6 @@ driver.wait(() => {
 });
 driver.takeScreenshot()
 .then(data => {
-  fs.writeFile('screenshot.png', data, 'base64', () => driver.quit());
+  writeFile('screenshot.png', data, 'base64', () => driver.quit());
 })
 .catch(console.error);
