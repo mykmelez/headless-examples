@@ -6,11 +6,13 @@ const { writeFile } = require('fs');
 const { Builder, By, Key, promise, until } = require('selenium-webdriver');
 const firefox = require('selenium-webdriver/firefox');
 
-process.env.MOZ_HEADLESS = "1";
+const binary = new firefox.Binary(firefox.Channel.NIGHTLY);
+binary.addArguments("--headless");
+const options = new firefox.Options().setBinary(binary);
 
 const driver = new Builder()
 .forBrowser('firefox')
-.setFirefoxOptions(new firefox.Options().setBinary(firefox.Channel.NIGHTLY))
+.setFirefoxOptions(options)
 .build();
 
 driver.get('https://developer.mozilla.org/');

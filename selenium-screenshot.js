@@ -7,12 +7,15 @@ const { promisify } = require('util');
 const { Builder, By, Key, promise, until } = require('selenium-webdriver');
 const firefox = require('selenium-webdriver/firefox');
 
-process.env.MOZ_HEADLESS = "1";
 promise.USE_PROMISE_MANAGER = false;
+
+const binary = new firefox.Binary(firefox.Channel.NIGHTLY);
+binary.addArguments("--headless");
+const options = new firefox.Options().setBinary(binary);
 
 const driver = new Builder()
 .forBrowser('firefox')
-.setFirefoxOptions(new firefox.Options().setBinary(firefox.Channel.NIGHTLY))
+.setFirefoxOptions(options)
 .build();
 
 async function main() {
