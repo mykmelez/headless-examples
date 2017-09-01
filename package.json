@@ -2,7 +2,7 @@
   "name": "project-dir",
   "version": "1.0.0",
   "main": "index.js",
-  "license": "MIT",
+  "license": "CC0-1.0",
   "dependencies": {
     "selenium-webdriver": "^3.5.0"
   }
