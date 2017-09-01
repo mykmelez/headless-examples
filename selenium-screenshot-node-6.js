@@ -8,11 +8,10 @@ const firefox = require('selenium-webdriver/firefox');
 
 const binary = new firefox.Binary(firefox.Channel.NIGHTLY);
 binary.addArguments("--headless");
-const options = new firefox.Options().setBinary(binary);
 
 const driver = new Builder()
 .forBrowser('firefox')
-.setFirefoxOptions(options)
+.setFirefoxOptions(new firefox.Options().setBinary(binary))
 .build();
 
 driver.get('https://developer.mozilla.org/');
